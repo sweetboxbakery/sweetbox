@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sweet Box — Checkout</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fff0c7;font-family:Georgia,"Times New Roman",serif;color:#5c3a21}
+nav{
+  height:78px;padding:8px 42px;display:flex;align-items:center;gap:35px;
+  background-color:#f2e2c5;
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.42) 50%,transparent 50%),
+    linear-gradient(rgba(255,255,255,.42) 50%,transparent 50%);
+  background-size:38px 38px;box-shadow:0 1px 4px rgba(80,50,25,.15);
+}
+.logo img{width:70px;height:70px;object-fit:contain}
+nav ul{list-style:none;display:flex;gap:17px;margin:0 auto;padding:0;align-items:center}
+nav a{color:#5c3a21;text-decoration:none;font-size:13px}
+nav a:hover{text-decoration:underline}
+
+.header-banner{
+  height:200px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+  background-image:url('banner.jpg');background-size:cover;background-position:center;background-repeat:no-repeat;
+}
+.header-banner h1{margin:0;font-size:42px;color:#4a2c15;text-shadow:0 2px 8px rgba(255,255,255,.7)}
+.header-banner p{margin:12px 0 0;font-size:16px;text-shadow:0 1px 6px rgba(255,255,255,.7)}
+
+.checkout-layout{display:flex;gap:25px;padding:30px 34px;align-items:flex-start}
+form{flex:2;display:flex;flex-direction:column;gap:20px}
+.card{background:#fff;border:2px solid #d1a72b;border-radius:10px;padding:20px}
+.card h2{margin:0 0 15px;font-size:22px;color:#8a4b1f}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:14px;margin-bottom:5px;font-weight:bold}
+.field input,.field textarea,.field select{
+  width:100%;padding:10px;border:1px solid #8a6a4f;border-radius:5px;
+  font-family:inherit;font-size:14px;background:#fffdf7;color:#5c3a21;
+}
+.field textarea{resize:vertical;min-height:70px}
+.field input.invalid,.field textarea.invalid,.field select.invalid{border-color:#c0392b;background:#fff3f1}
+.error{display:block;color:#c0392b;font-size:12px;min-height:14px;margin-top:3px}
+.row{display:flex;gap:15px}
+.row .field{flex:1}
+
+.pay-option{
+  display:flex;align-items:center;gap:10px;padding:12px;margin-bottom:10px;
+  border:2px solid #e3cf9b;border-radius:8px;cursor:pointer;font-size:16px;
+}
+.pay-option.selected{border-color:#8a4b1f;background:#fff8e7}
+.pay-option input{width:auto;accent-color:#8a4b1f}
+.pay-panel{display:none;margin-top:15px;padding:15px;background:#fff8e7;border-radius:8px}
+.pay-panel .instructions{font-size:14px;line-height:1.5;margin:0 0 14px}
+.pay-panel .instructions strong{color:#8a4b1f}
+.qr-note{font-size:12px;font-style:italic;margin-top:4px}
+
+aside{
+  flex:1;background:#947257;border-radius:10px;padding:25px;color:#fff8e7;
+  position:sticky;top:15px;
+}
+aside h2{margin:0 0 15px;font-size:22px;text-align:center}
+aside hr{border:none;border-top:1px solid #fff8e7;margin:15px 0}
+.sum-item{display:flex;align-items:center;gap:10px;margin:10px 0;font-size:14px}
+.sum-item img{width:46px;height:46px;border-radius:5px;object-fit:cover;background:#f8f4eb}
+.sum-info{flex:1}
+.summary-row{display:flex;justify-content:space-between;font-size:15px;margin:8px 0}
+.total{font-size:20px;font-weight:bold}
+#empty-msg{display:none;text-align:center;margin:10px 0}
+#place-order{
+  display:block;width:100%;margin-top:15px;padding:12px;background:#fff0c7;color:#5c3a21;
+  border:none;border-radius:20px;font-family:inherit;font-size:16px;cursor:pointer;
+}
+#place-order:hover:not(:disabled){background:#fff8e7}
+#place-order:disabled{opacity:.5;cursor:not-allowed}
+.back-link{display:block;text-align:center;margin-top:12px;color:#fff8e7;font-size:14px}
+
+/* Confirmation popup */
+#modal{display:none;position:fixed;inset:0;background:rgba(60,35,15,.6);align-items:center;justify-content:center;z-index:50;padding:20px}
+#modal.show{display:flex}
+.modal-box{background:#fff;border:3px solid #d1a72b;border-radius:14px;padding:30px;max-width:420px;width:100%;text-align:center}
+.modal-box h2{margin:0 0 10px;color:#8a4b1f;font-size:26px}
+.modal-box p{margin:6px 0;font-size:15px}
+.modal-box button{
+  margin-top:18px;padding:10px 30px;background:#947257;color:#fff8e7;border:none;
+  border-radius:20px;font-family:inherit;font-size:15px;cursor:pointer;
+}
+
+@media(max-width:850px){
+ nav{height:auto;flex-wrap:wrap;padding:10px 20px}
+ nav ul{flex-wrap:wrap;justify-content:center}
+ .checkout-layout{flex-direction:column}
+ aside{width:100%;position:static}
+ .row{flex-direction:column;gap:0}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><img src="logo.png" alt="Sweet Box logo"></div>
+  <ul>
+    <li><a href="#">Home</a></li><li><a href="#">|</a></li>
+    <li><a href="#">Shop</a></li><li><a href="#">|</a></li>
+    <li><a href="#">Categories</a></li><li><a href="#">|</a></li>
+    <li><a href="#">About Us</a></li><li><a href="#">|</a></li>
+    <li><a href="#">Contact Us</a></li><li><a href="#">|</a></li>
+    <li><a href="cart.html">Cart</a></li>
+    <li style="margin-left:22px"><a href="#">Log in | Sign Up</a></li>
+  </ul>
+</nav>
+
+<div class="header-banner">
+  <h1>Checkout</h1>
+  <p>Almost there! Enter your details and choose how to pay.</p>
+</div>
+
+<div class="checkout-layout">
+
+<form id="checkout-form" novalidate>
+
+  <!-- Delivery details -->
+  <div class="card">
+    <h2>Delivery Details</h2>
+    <div class="field">
+      <label for="fullname">Full Name</label>
+      <input type="text" id="fullname" placeholder="Juan Dela Cruz">
+      <span class="error" id="err-fullname"></span>
+    </div>
+    <div class="row">
+      <div class="field">
+        <label for="phone">Mobile Number</label>
+        <input type="text" id="phone" maxlength="11" placeholder="09171234567">
+        <span class="error" id="err-phone"></span>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="juan@email.com">
+        <span class="error" id="err-email"></span>
+      </div>
+    </div>
+    <div class="field">
+      <label for="address">Complete Address</label>
+      <textarea id="address" placeholder="House no., Street, Barangay, City, Province"></textarea>
+      <span class="error" id="err-address"></span>
+    </div>
+  </div>
+
+  <!-- Payment -->
+  <div class="card">
+    <h2>Payment Method</h2>
+
+    <label class="pay-option"><input type="radio" name="payment" value="gcash" checked> 📱 GCash</label>
+    <label class="pay-option"><input type="radio" name="payment" value="bank"> 🏦 Bank Transfer</label>
+    <label class="pay-option"><input type="radio" name="payment" value="cod"> 💵 Cash on Delivery (COD)</label>
+
+    <!-- GCash -->
+    <div class="pay-panel" id="panel-gcash">
+      <p class="instructions">
+        Send your payment to <strong>GCash 0917 123 4567</strong> (Sweet Box).<br>
+        Then enter the number you paid from and the 13-digit reference number from your receipt.
+      </p>
+      <div class="field">
+        <label for="gcash-number">Your GCash Number</label>
+        <input type="text" id="gcash-number" maxlength="11" placeholder="09171234567">
+        <span class="error" id="err-gcash-number"></span>
+      </div>
+      <div class="field">
+        <label for="gcash-ref">Reference Number</label>
+        <input type="text" id="gcash-ref" maxlength="13" placeholder="13-digit reference no.">
+        <span class="error" id="err-gcash-ref"></span>
+      </div>
+    </div>
+
+    <!-- Bank -->
+    <div class="pay-panel" id="panel-bank">
+      <p class="instructions">
+        Transfer to <strong>BDO — Sweet Box Bakery — Acct. No. 0012 3456 7890</strong>.<br>
+        Then fill in the details below so we can verify your payment.
+      </p>
+      <div class="field">
+        <label for="bank-name">Your Bank</label>
+        <select id="bank-name">
+          <option value="">-- Select bank --</option>
+          <option>BDO</option>
+          <option>BPI</option>
+          <option>Metrobank</option>
+          <option>Landbank</option>
+          <option>UnionBank</option>
+          <option>Security Bank</option>
+          <option>PNB</option>
+          <option>Other</option>
+        </select>
+        <span class="error" id="err-bank-name"></span>
+      </div>
+      <div class="field">
+        <label for="bank-holder">Account Holder Name</label>
+        <input type="text" id="bank-holder" placeholder="Name on your account">
+        <span class="error" id="err-bank-holder"></span>
+      </div>
+      <div class="field">
+        <label for="bank-ref">Transfer Reference Number</label>
+        <input type="text" id="bank-ref" maxlength="20" placeholder="Reference no. from your receipt">
+        <span class="error" id="err-bank-ref"></span>
+      </div>
+    </div>
+
+    <!-- COD -->
+    <div class="pay-panel" id="panel-cod">
+      <p class="instructions">
+        Pay in cash when your order arrives. Please prepare the exact amount shown in your
+        order summary. No payment details needed. 🍪
+      </p>
+    </div>
+  </div>
+
+</form>
+
+<aside>
+  <h2>ORDER SUMMARY</h2>
+  <hr>
+  <div id="summary-items"></div>
+  <p id="empty-msg">Your cart is empty.</p>
+  <hr>
+  <div class="summary-row"><span>Subtotal</span><span id="subtotal">₱0.00</span></div>
+  <div class="summary-row"><span>Delivery fee</span><span id="delivery-fee">₱0.00</span></div>
+  <hr>
+  <div class="summary-row total"><span>Total</span><span id="total">₱0.00</span></div>
+  <button type="submit" id="place-order" form="checkout-form">Place Order</button>
+  <a class="back-link" href="cart.html">&lt; Back to Cart</a>
+</aside>
+
+</div>
+
+<!-- Order confirmation popup -->
+<div id="modal">
+  <div class="modal-box">
+    <h2>🎉 Order Placed!</h2>
+    <p>Thank you for ordering from Sweet Box.</p>
+    <p><strong>Order No:</strong> <span id="conf-order"></span></p>
+    <p><strong>Payment:</strong> <span id="conf-method"></span></p>
+    <p><strong>Total:</strong> <span id="conf-total"></span></p>
+    <p><strong>Status:</strong> <span id="conf-status"></span></p>
+    <button type="button" id="modal-close">Back to Cart</button>
+  </div>
+</div>
+
+<script src="checkout.js"></script>
+</body>
+</html>
