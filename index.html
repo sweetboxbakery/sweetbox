@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sweet Box | Freshly Baked Goods</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header" id="header">
+    <a href="#home" class="logo" aria-label="Sweet Box home">
+      <img src="images/logo.png" alt="Sweet Box logo">
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      <a href="#home">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="categories.html">Categories</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+
+    <div class="auth">
+      <a href="login.html">Log in</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </header>
+
+  <!-- 1. hero -->
+  <main class="hero" id="home">
+    <div class="hero-content">
+      <h1>Freshly Baked Goods.</h1>
+      <p>Indulge in artisanal cakes, cookies, and sweet treats made with love.</p>
+      <a href="#locations" class="order-btn">ORDER NOW</a>
+    </div>
+  </main>
+
+  <!-- 2. location picker (just for show, scrolls to the menu) -->
+  <section class="locations" id="locations">
+
+    <h1 class="reveal">Welcome!</h1>
+    <p class="subtitle reveal" style="--d: 0.1s">Select online bakery location to continue...</p>
+
+    <div class="location-list">
+      <a href="#menu" class="location-btn reveal" style="--d: 0.2s">Metro Manila</a>
+      <a href="#menu" class="location-btn reveal" style="--d: 0.3s">Quezon City</a>
+      <a href="#menu" class="location-btn reveal" style="--d: 0.4s">Laguna</a>
+      <a href="#menu" class="location-btn reveal" style="--d: 0.5s">Cebu</a>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+
+    <h2 class="section-title reveal">Our Best Sellers.</h2>
+
+    <div class="products">
+      <article class="product-card reveal" style="--d: 0s">
+        <div class="cookie-wrap"><img src="images/cookie1.png" alt="Biscoff Chewy Crumble Cookie"></div>
+        <h3>Biscoff Chewy Crumble Cookie</h3>
+        <p class="desc">A soft, chewy cookie topped with creamy Biscoff drizzle and crunchy cookie crumble.</p>
+        <p class="price"><b>₱</b> 80 <span>/pc</span></p>
+      </article>
+
+      <article class="product-card reveal" style="--d: 0.15s">
+        <div class="cookie-wrap"><img src="images/cookie3.png" alt="Ferrero Choco Crumble Cookie"></div>
+        <h3>Ferrero Choco Crumble Cookie</h3>
+        <p class="desc">A rich chocolate cookie topped with smooth chocolate drizzle with hazelnut crumble.</p>
+        <p class="price"><b>₱</b> 90 <span>/pc</span></p>
+      </article>
+
+      <article class="product-card reveal" style="--d: 0.3s">
+        <div class="cookie-wrap"><img src="images/cookie2.png" alt="Strawberry Cheesecake Crumble Cookie"></div>
+        <h3>Strawberry Cheesecake Crumble Cookie</h3>
+        <p class="desc">A soft, buttery, cookie topped with creamy cheesecake frosting with cookie crumble on top.</p>
+        <p class="price"><b>₱</b> 80 <span>/pc</span></p>
+      </article>
+    </div>
+
+    <div class="offers">
+      <div class="offers-head reveal">
+        <img src="images/logo.png" alt="" class="offers-logo">
+        <h2 class="section-title">Special Offers</h2>
+      </div>
+
+      <div class="offer reveal" style="--d: 0s">
+        <p>Get 20% OFF Your First Order!</p>
+        <span class="claim-btn">Claim Voucher</span>
+      </div>
+
+      <div class="offer reveal" style="--d: 0.12s">
+        <p>Weekend Special: Get 15% Off All Artisan Pies!</p>
+        <span class="claim-btn">Claim Voucher</span>
+      </div>
+
+      <div class="offer reveal" style="--d: 0.24s">
+        <p>Buy 1 Dozen Cupcakes, Get a Free Iced Coffee!</p>
+        <span class="claim-btn">Claim Voucher</span>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>© 2026 Sweet Dreams Bakery. All rights reserved.</p>
+      <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Service</a></p>
+    </footer>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

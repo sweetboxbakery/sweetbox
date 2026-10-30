@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shop | Sweet Box</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="shop-page">
+
+  <header class="header" id="header">
+    <a href="index.html" class="logo" aria-label="Sweet Box home">
+      <img src="images/logo.png" alt="Sweet Box logo">
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav" id="nav">
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="categories.html">Categories</a>
+      <a href="about.html">About Us</a>
+      <a href="contact.html">Contact Us</a>
+      <a href="cart.html">Cart</a>
+    </nav>
+
+    <div class="auth">
+      <a href="login.html">Log in</a>
+      <a href="signup.html">Sign Up</a>
+    </div>
+  </header>
+
+  <main class="shop-hero">
+    <div class="shop-text">
+      <h1>Freshly Baked Goods.</h1>
+      <p>Indulge in artisanal cakes, cookies, and sweet treats made with love.</p>
+      <a href="#products" class="shop-btn">ORDER NOW!</a>
+    </div>
+
+    <div class="shop-art">
+      <div class="heart-glow" aria-hidden="true"></div>
+
+      <img src="images/shop-banner.png" alt="Strawberry shortcake with flower and heart cookies">
+    </div>
+  </main>
+
+  <section class="collection" id="products">
+
+    <div class="collection-top reveal">
+      <h2 class="collection-title">Our Sweet &amp; Freshly<br>Baked Collection</h2>
+
+      <label class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="14" cy="10" r="6.5"/><path d="M9.3 14.7 3.5 20.5"/></svg>
+        <input type="search" id="searchBox" placeholder="Search for cookies, cakes, or breads..." autocomplete="off" aria-label="Search the collection">
+      </label>
+    </div>
+
+    <div class="filters reveal" style="--d: 0.1s">
+      <button type="button" class="active" data-category="all"><span>All</span></button>
+      <button type="button" data-category="cakes"><span>Cakes</span></button>
+      <button type="button" data-category="cookies"><span>Cookies</span></button>
+      <button type="button" data-category="breads"><span>Breads</span></button>
+    </div>
+
+    <h3 class="group-title reveal" id="groupTitle" style="--d: 0.15s">All</h3>
+
+    <div class="cake-grid">
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.1s" data-name="Strawberry Shortcake" data-category="cakes"><img src="images/shop-cake1.png" alt="Strawberry Shortcake"></div>
+      <div class="cake-tile glow-pink reveal" style="--d: 0.2s" data-name="Carrot Cake" data-category="cakes"><img src="images/shop-cake2.png" alt="Carrot Cake"></div>
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.3s" data-name="Chocolate Cake" data-category="cakes"><img src="images/shop-cake3.png" alt="Chocolate Cake"></div>
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.4s" data-name="Matcha Strawberry Cake" data-category="cakes"><img src="images/shop-cake4.png" alt="Matcha Strawberry Cake"></div>
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.1s" data-name="Biscoff Chewy Crumble Cookie" data-category="cookies"><img src="images/shop-cookie1.png" alt="Biscoff Chewy Crumble Cookie"></div>
+      <div class="cake-tile glow-pink reveal" style="--d: 0.2s" data-name="Strawberry Cheesecake Crumble Cookie" data-category="cookies"><img src="images/shop-cookie2.png" alt="Strawberry Cheesecake Crumble Cookie"></div>
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.3s" data-name="Ferrero Choco Crumble Cookie" data-category="cookies"><img src="images/shop-cookie3.png" alt="Ferrero Choco Crumble Cookie"></div>
+      <div class="cake-tile glow-pink reveal" style="--d: 0.4s" data-name="Sprinkle Cookie" data-category="cookies"><img src="images/shop-cookie4.png" alt="Sprinkle Cookie"></div>
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.1s" data-name="Croissant" data-category="breads"><img src="images/shop-bread1.png" alt="Croissant"></div>
+      <div class="cake-tile glow-pink reveal" style="--d: 0.2s" data-name="Pretzel" data-category="breads"><img src="images/shop-bread2.png" alt="Pretzel"></div>
+      <div class="cake-tile glow-yellow reveal" style="--d: 0.3s" data-name="Pain au Chocolat" data-category="breads"><img src="images/shop-bread3.png" alt="Pain au Chocolat"></div>
+      <div class="cake-tile glow-pink reveal" style="--d: 0.4s" data-name="Almond Muffin" data-category="breads"><img src="images/shop-bread4.png" alt="Almond Muffin"></div>
+    </div>
+
+    <p class="no-results" id="emptyNote" hidden>Nothing matches your search yet.</p>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
