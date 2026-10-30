@@ -116,6 +116,39 @@ function addToCart(product) {
   saveCart(cart);
 }
 
+// vouchers: the home page saves the one that was clicked, the cart page uses it
+const VOUCHER_KEY = "sweetbox-voucher";
+
+const vouchers = {
+  first20:   { label: "20% OFF First Order", type: "percent", value: 20 },
+  weekend15: { label: "Weekend Special 15% OFF", type: "percent", value: 15 },
+  freebie:   { label: "Free Delivery", type: "delivery", value: 0 }
+};
+
+function getVoucher() {
+  try {
+    return localStorage.getItem(VOUCHER_KEY);
+  } catch (err) {
+    return null;
+  }
+}
+
+function saveVoucher(code) {
+  try {
+    localStorage.setItem(VOUCHER_KEY, code);
+  } catch (err) {
+    // storage is blocked, so the voucher just won't be remembered
+  }
+}
+
+// home page: clicking Claim Voucher saves it and goes straight to the cart
+document.querySelectorAll(".claim-btn").forEach(function (button) {
+  button.addEventListener("click", function () {
+    saveVoucher(button.dataset.voucher);
+    location.href = "cart.html";
+  });
+});
+
 // shop page: the tabs and the search bar filter the collection
 const searchBox = document.getElementById("searchBox");
 
@@ -353,6 +386,9 @@ if (cartList) {
   const subtotalText = document.getElementById("subtotal");
   const deliveryText = document.getElementById("delivery");
   const totalText = document.getElementById("total");
+  const discountRow = document.getElementById("discountRow");
+  const discountLabel = document.getElementById("discountLabel");
+  const discountText = document.getElementById("discount");
   const checkoutBtn = document.getElementById("checkoutBtn");
   const deliveryFee = 50;
 
@@ -405,9 +441,25 @@ if (cartList) {
 
     // the delivery fee only counts when there is something in the cart
     const delivery = cart.length ? deliveryFee : 0;
+
+    // work out the voucher discount
+    const voucher = vouchers[getVoucher()];
+    let discount = 0;
+
+    if (voucher && cart.length) {
+      if (voucher.type === "percent") discount = subtotal * voucher.value / 100;
+      if (voucher.type === "delivery") discount = delivery;
+    }
+
+    discountRow.hidden = !voucher;
+    if (voucher) {
+      discountLabel.textContent = voucher.label;
+      discountText.textContent = "-" + peso(discount);
+    }
+
     subtotalText.textContent = peso(subtotal);
     deliveryText.textContent = peso(delivery);
-    totalText.textContent = peso(subtotal + delivery);
+    totalText.textContent = peso(subtotal + delivery - discount);
     checkoutBtn.disabled = cart.length === 0;
   }
 
@@ -426,6 +478,12 @@ if (cartList) {
 
     saveCart(cart);
     drawCart();
+  });
+
+  // Proceed to Checkout goes to the checkout page
+  checkoutBtn.addEventListener("click", function () {
+    if (getCart().length === 0) return;
+    location.href = "checkout.html";
   });
 
   drawCart();
@@ -474,4 +532,3 @@ if (authForm) {
     location.href = authForm.dataset.next;
   });
 }
-
